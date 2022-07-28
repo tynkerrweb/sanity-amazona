@@ -1,21 +1,45 @@
-import Head from "next/head";
-import { Typography } from "@mui/material";
+import { CircularProgress, Typography, Alert, Grid } from "@mui/material";
+import Layout from "../components/Layout";
+import { useState, useEffect } from "react";
+import client from "../utils/client";
+import ProductItem from "../components/ProductItem";
 
 export default function Home() {
-  return (
-    <div>
-      <Head>
-        <title>Sanity Amazona</title>
-        <meta
-          name="description"
-          content="The ecommerce website by next and sanity"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+  const [state, setState] = useState({
+    products: [],
+    error: "",
+    loading: true,
+  });
 
-      <Typography component="h1" variant="h1">
-        Sanity Amazona
-      </Typography>
-    </div>
+  const { loading, error, products } = state;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const products = await client.fetch(`*[_type == "product"]`);
+        setState({ products, loading: false });
+      } catch (err) {
+        setState({ error: err.message, loading: false });
+      }
+    };
+    fetchData();
+  }, []);
+
+  return (
+    <Layout>
+      {loading ? (
+        <CircularProgress />
+      ) : error ? (
+        <Alert variant="error">{error}</Alert>
+      ) : (
+        <Grid container spacing={3}>
+          {products.map((product) => (
+            <Grid item xs={12} sm={6} md={4} key={product.slug}>
+              <ProductItem product={product} />
+            </Grid>
+          ))}
+        </Grid>
+      )}
+    </Layout>
   );
 }
