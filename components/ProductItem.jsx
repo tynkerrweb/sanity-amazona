@@ -7,8 +7,9 @@ import {
   CardContent,
   CardMedia,
   Typography,
+  Rating,
 } from "@mui/material";
-import urlForThumbnail from "../utils/image";
+import { urlForThumbnail } from "../utils/image";
 
 const ProductItem = ({ product }) => {
   return (
@@ -22,9 +23,7 @@ const ProductItem = ({ product }) => {
           />
           <CardContent>
             <Typography>{product.name}</Typography>
-            <Typography>
-              {product.rating} ({product.numReviews} reviews)
-            </Typography>
+            <Rating value={product.rating} readOnly></Rating>
           </CardContent>
         </CardActionArea>
       </NextLink>
