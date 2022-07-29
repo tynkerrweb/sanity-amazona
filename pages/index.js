@@ -34,7 +34,7 @@ export default function Home() {
       ) : (
         <Grid container spacing={3}>
           {products.map((product) => (
-            <Grid item xs={12} sm={6} md={4} key={product.slug}>
+            <Grid item xs={12} sm={6} md={4} key={product.slug.current}>
               <ProductItem product={product} />
             </Grid>
           ))}

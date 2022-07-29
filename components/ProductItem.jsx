@@ -3,6 +3,7 @@ import NextLink from "next/link";
 import {
   Button,
   Card,
+  CardActions,
   CardActionArea,
   CardContent,
   CardMedia,
@@ -27,12 +28,12 @@ const ProductItem = ({ product }) => {
           </CardContent>
         </CardActionArea>
       </NextLink>
-      <CardActionArea>
+      <CardActions>
         <Typography>${product.price}</Typography>
         <Button size="small" color="primary">
           Add to Cart
         </Button>
-      </CardActionArea>
+      </CardActions>
     </Card>
   );
 };
